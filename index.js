@@ -123,6 +123,21 @@ app.post("/v2/addmessage", async (req, res) => {
   }
 });
 
+app.post("/v2/allrooms", async (req, res) => {
+  const Auth = req.body["auth"];
+
+  if (Auth == Auth) {
+    try {
+      const room = await Room.find({});
+      res.status(200).json(Room);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  } else {
+    res.status(401).json({ message: "UnAuthrized" });
+  }
+});
+
 mongoose
   .connect(
     "mongodb+srv://mostafawaseem22:F4nNYVG7SFzSIWct@onlinechatdb.4uqhkez.mongodb.net/?retryWrites=true&w=majority&appName=OnlineChatDb"
