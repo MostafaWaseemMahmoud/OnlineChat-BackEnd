@@ -7,10 +7,59 @@ app.use(express.json());
 app.use(express.json());
 app.use(cors());
 
-const AuthorizationCode = "mostafawaseem11.";
+// Data Base Models
+
+const User = require("./models/user.model");
+
+// AuthorizationCode
+
+const auth = "mostafawaseem11.";
+
+// Get Methods
 
 app.get("/", (requset, response) => {
   response.status(200).send("!!!@@@@");
+});
+
+app.post("/v2/allusers", async (req, res) => {
+  const Auth = req.body["auth"];
+
+  if (Auth == Auth) {
+    try {
+      const user = await User.find({});
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  } else {
+    res.status(401).json({ message: "UnAuthrized" });
+  }
+});
+
+// Post Methods
+
+app.post("/v2/join", async (req, res) => {
+  const Auth = req.body["auth"];
+  if (Auth == auth) {
+    const data = {
+      name: req.body["name"],
+      email: req.body["email"],
+      password: req.body["password"],
+      phoneNumber: req.body["phonenumber"],
+    };
+    if (data) {
+      try {
+        const user = await User.create(data);
+        res.status(200).json(user);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    } else {
+      res.status(400).json({ message: "badRequst(No Data Posted Found)" });
+    }
+  } else {
+    res.status(401).json({ message: "UnAuthrized" });
+  }
 });
 
 mongoose
