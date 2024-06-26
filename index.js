@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const PORT = 8000 || env.PORT;
+const PORT = 3000 || env.PORT;
 const cors = require("cors");
 const app = express();
 app.use(express.json());
@@ -18,8 +18,8 @@ const auth = "mostafawaseem11.";
 
 // Get Methods
 
-app.get("/", (requset, response) => {
-  response.status(200).send("!!!@@@@");
+app.get("/", (req, res) => {
+  res.status(200).json("Hello From Data Database");
 });
 
 app.post("/v2/allusers", async (req, res) => {
@@ -149,5 +149,5 @@ mongoose
     });
   })
   .catch(() => {
-    console.log("connectoin Faild");
+    console.log("Connencted Faild");
   });
